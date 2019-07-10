@@ -45,10 +45,6 @@ export class ConfigService {
     return config;
   }
 
-  get apiKey(): string {
-    return this.envConfig.API_KEY;
-  }
-
   get envs(): EnvConfig {
     return this.envConfig;
   }
