@@ -1,20 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { EventController } from './event.controller';
+import { EventService } from './event.service';
 
-describe('AppController', () => {
+describe('EventController', () => {
   let app: TestingModule;
 
   beforeAll(async () => {
     app = await Test.createTestingModule({
-      controllers: [AppController],
-      providers: [AppService],
+      controllers: [EventController],
+      providers: [EventService],
     }).compile();
   });
 
   describe('getHello', () => {
     it('should return "Hello World!"', () => {
-      const appController = app.get<AppController>(AppController);
+      const appController = app.get<EventController>(EventController);
       expect(appController.getHello()).toBe('Hello World!');
     });
   });
