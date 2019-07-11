@@ -1,20 +1,21 @@
-import React from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
-import ProTip from './ProTip';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { ThemeProvider } from "@material-ui/styles";
+import React from "react";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { rootReducer } from "./store/root/root.reducer";
+import theme from "./theme";
+import Form from "./Form";
 
 export default function App() {
+  const store = createStore(rootReducer);
   return (
-    <Container maxWidth="sm">
-      <Box my={4}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Create React App v4-beta example with TypeScript
-        </Typography>
-        <ProTip />
-        <MadeWithLove />
-      </Box>
-    </Container>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <Form />
+      </ThemeProvider>
+    </Provider>
   );
 }
