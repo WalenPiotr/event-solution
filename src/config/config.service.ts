@@ -3,23 +3,7 @@ import * as fs from 'fs';
 import { IsNotEmpty, validateSync, IsInt } from 'class-validator';
 import { plainToClass, Transform } from 'class-transformer';
 
-export class EnvConfig {
-  @IsNotEmpty()
-  DB_HOST: string;
-
-  @IsNotEmpty()
-  DB_USERNAME: string;
-
-  @IsNotEmpty()
-  DB_PASSWORD: string;
-
-  @IsNotEmpty()
-  DB_DATABASE: string;
-
-  @IsInt()
-  @Transform(value => parseInt(value, 10), { toClassOnly: true })
-  DB_PORT: number;
-}
+export class EnvConfig {}
 
 export class ConfigService {
   private readonly envConfig: EnvConfig;

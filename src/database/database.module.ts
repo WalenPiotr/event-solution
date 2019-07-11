@@ -1,25 +1,17 @@
 import { Module, Global, DynamicModule } from '@nestjs/common';
 import { ConfigModule } from '../config/config.module';
 import { ConfigService } from '../config/config.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 
-function DatabaseOrmModule(): DynamicModule {
-  const { envs } = new ConfigService();
-  return TypeOrmModule.forRoot({
-    type: 'postgres',
-    host: envs.DB_HOST,
-    port: envs.DB_PORT,
-    username: envs.DB_USERNAME,
-    password: envs.DB_PASSWORD,
-    database: envs.DB_DATABASE,
-    synchronize: true,
-    logging: true,
-    entities: ['**/**.entity{.ts,.js}'],
+function DatabaseWithConfigModule(): DynamicModule {
+  const connectionString = `mongodb://localhost:27017/dbname`;
+  return MongooseModule.forRoot(connectionString, {
+    useNewUrlParser: true,
   });
 }
 
 @Global()
 @Module({
-  imports: [ConfigModule, DatabaseOrmModule()],
+  imports: [ConfigModule, DatabaseWithConfigModule()],
 })
 export class DatabaseModule {}
