@@ -1,0 +1,18 @@
+version: "3.1"
+services:
+    db:
+    image: mongo:latest
+    restart: always
+    env_file:
+      - ./.env/db.env
+    volumes:
+      - ./.data/db:/data/db
+  service:
+    image: walenpiotr/event-solution:0.0.0
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - ./.env/service.env
+    ports:
+      - 3000:3000
