@@ -6,5 +6,3 @@ export const EventSchema = new mongoose.Schema({
   email: String,
   date: Date,
 });
-
-// const Event = mongoose.model('Event', EventSchema);
