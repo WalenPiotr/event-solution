@@ -9,6 +9,7 @@
     "class-transformer": "^0.2.3",
     "class-validator": "^0.9.1",
     "date-fns": "^2.0.0-beta.2",
+    "portable-fetch": "^3.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
@@ -17,15 +18,14 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "superagent": "^5.1.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "url": "^0.11.0"
   },
   "scripts": {
     "start": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "build-generate": "tsc generate/swagger.ts",
-    "generate": "node generate/swagger.js"
+    "eject": "react-scripts eject"
   },
   "browserslist": {
     "production": [
@@ -42,6 +42,7 @@
   "devDependencies": {
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.4",
-    "@types/react-redux": "^7.1.1"
+    "@types/react-redux": "^7.1.1",
+    "@types/redux-logger": "^3.0.7"
   }
 }
