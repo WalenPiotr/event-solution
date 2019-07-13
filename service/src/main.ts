@@ -22,7 +22,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   //share swagger docs on one of the endpoints
-  app.use('/v1/swagger.json', res => res.send(document));
+  app.use('/v1/swagger.json', (_, res) => res.send(document));
 
   await app.listen(4000);
 }
