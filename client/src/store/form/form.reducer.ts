@@ -1,5 +1,5 @@
 import { FormActionType, FormAction } from "./form.types";
-import { FormErrors, FormState } from "./form.state";
+import { FormErrors, FormState } from "./form.interfaces";
 
 export function formReducer(
   state = new FormState(),

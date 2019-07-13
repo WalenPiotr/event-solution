@@ -16,7 +16,5 @@ export const submitForm = (): ThunkAction<
   const res = await apiClient.postEvent({
     eventDto,
   });
-
-  console.log(res.body);
   dispatch(setSubmitting(false));
 };
