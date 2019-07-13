@@ -10,6 +10,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   app.use(helmet());
+  app.enableCors();
 
   const options = new DocumentBuilder()
     .setTitle('Event API')
@@ -20,7 +21,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
-  app.enableCors();
+  //share swagger docs on one of the endpoints
+  app.use('/api-json', res => res.send(document));
 
   await app.listen(4000);
 }

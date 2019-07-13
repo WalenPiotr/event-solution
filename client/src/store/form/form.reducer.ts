@@ -1,25 +1,43 @@
-import { FormActionType, FormAction, FormState } from "./form.types";
-
-const initialState: FormState = {
-  values: {
-    firstName: "John",
-    lastName: "Doe",
-    email: "john-doe@gmail.com",
-  },
-};
+import { FormActionType, FormAction } from "./form.types";
+import { FormErrors, FormState } from "./form.state";
 
 export function formReducer(
-  state = initialState,
+  state = new FormState(),
   action: FormAction,
 ): FormState {
   switch (action.type) {
-    case FormActionType.CHANGE_VALUE:
+    case FormActionType.SET_VALUES:
       return {
+        ...state,
         values: {
           ...state.values,
-          [action.payload.name]: action.payload.value,
+          ...action.payload,
         },
       };
+    case FormActionType.SET_ERRORS:
+      return {
+        ...state,
+        errors: {
+          ...new FormErrors(),
+          ...action.payload,
+        },
+      };
+    case FormActionType.SET_TOUCHED:
+      return {
+        ...state,
+        touched: {
+          ...state.touched,
+          ...action.payload,
+        },
+      };
+    case FormActionType.CLEAR_ERRORS: {
+      return {
+        ...state,
+        errors: {
+          ...new FormErrors(),
+        },
+      };
+    }
     default:
       return state;
   }

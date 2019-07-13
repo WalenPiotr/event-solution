@@ -3,22 +3,32 @@
   "version": "4.0.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "latest",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
+    "@date-io/date-fns": "^1.3.8",
+    "@material-ui/core": "^4.2.0",
+    "@material-ui/pickers": "^3.1.2",
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^7.1.1",
-    "react": "latest",
-    "react-dom": "latest",
+    "@types/superagent": "^4.1.3",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.9.1",
+    "date-fns": "^2.0.0-beta.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
-    "react-scripts": "latest",
+    "react-scripts": "^3.0.1",
     "redux": "^4.0.4",
-    "typescript": "latest"
+    "redux-thunk": "^2.3.0",
+    "superagent": "^5.1.0",
+    "typescript": "^3.5.3"
   },
   "scripts": {
     "start": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-generate": "tsc generate/swagger.ts",
+    "generate": "node generate/swagger.js"
   },
   "browserslist": {
     "production": [
@@ -31,5 +41,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.3.7",
+    "js-beautify": "^1.10.0",
+    "node-fetch": "^2.6.0",
+    "swagger-typescript-codegen": "^1.10.4"
   }
 }

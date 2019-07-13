@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { formReducer } from "../form/form.reducer";
-import { FormState } from "../form/form.types";
+import { FormState } from "../form/form.state";
 
 export interface RootState {
   form: FormState;
