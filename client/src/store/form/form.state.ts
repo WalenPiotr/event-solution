@@ -35,6 +35,7 @@ export class FormErrors {
   firstName: string | null = null;
   lastName: string | null = null;
   email: string | null = null;
+  date: string | null = null;
   [key: string]: string | null;
 }
 
@@ -42,6 +43,7 @@ export class FormTouched {
   firstName: boolean = false;
   lastName: boolean = false;
   email: boolean = false;
+  date: boolean = true;
   [key: string]: boolean;
 }
 
@@ -49,5 +51,6 @@ export class FormState {
   values: FormValues = new FormValues();
   errors: FormErrors = validateFormValues(new FormValues());
   touched: FormTouched = new FormTouched();
-  submitting: boolean = false;
+  isSubmitting: boolean = false;
+  submitError: string | null = null;
 }

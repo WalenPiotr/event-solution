@@ -31,3 +31,10 @@ export function setSubmitting(value: boolean): FormAction {
     payload: value,
   };
 }
+
+export function setSubmitError(message: string): FormAction {
+  return {
+    type: FormActionType.SET_SUBMIT_ERROR,
+    payload: message,
+  };
+}

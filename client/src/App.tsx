@@ -8,11 +8,12 @@ import theme from "./theme";
 import Form from "./Form";
 import thunkMiddleware from "redux-thunk";
 import { formValidationMiddleware } from "./store/form/form.middlewares";
+import logger from "redux-logger";
 
 export default function App() {
   const store = createStore(
     rootReducer,
-    applyMiddleware(thunkMiddleware, formValidationMiddleware),
+    applyMiddleware(thunkMiddleware, formValidationMiddleware, logger),
   );
   return (
     <Provider store={store}>

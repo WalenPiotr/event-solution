@@ -1,8 +1,7 @@
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../root/root.reducer";
 import { FormAction, FormActionType } from "./form.types";
-import { setSubmitting, setValues } from "./form.actions";
-import { apiClient } from "../../configureClient";
+import { setSubmitting, setValues, setSubmitError } from "./form.actions";
 
 export const submitForm = (): ThunkAction<
   void,
@@ -13,8 +12,15 @@ export const submitForm = (): ThunkAction<
   dispatch(setSubmitting(true));
   const { values } = getState().form;
   const eventDto = { ...values, date: values.date.toISOString() };
-  const res = await apiClient.postEvent({
-    eventDto,
-  });
+
+  // try {
+  //   const res = await apiClient.postEvent({
+  //     eventDto,
+  //   });
+  // } catch (e) {
+  //   console.log(e.response);
+  //   dispatch(setSubmitError(e.toString() as string));
+  // }
+
   dispatch(setSubmitting(false));
 };

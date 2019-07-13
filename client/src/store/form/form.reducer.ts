@@ -41,10 +41,15 @@ export function formReducer(
     case FormActionType.SET_SUBMITTING: {
       return {
         ...state,
-        submitting: action.payload,
+        isSubmitting: action.payload,
       };
     }
-
+    case FormActionType.SET_SUBMIT_ERROR: {
+      return {
+        ...state,
+        submitError: action.payload,
+      };
+    }
     default:
       return state;
   }

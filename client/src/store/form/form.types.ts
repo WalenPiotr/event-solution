@@ -7,6 +7,7 @@ export enum FormActionType {
   SET_TOUCHED = "SET_TOUCHED",
   CLEAR_ERRORS = "CLEAR_ERRORS",
   SET_SUBMITTING = "SET_SUBMITTING",
+  SET_SUBMIT_ERROR = "SET_SUBMIT_ERROR",
 }
 
 export interface SetValueAction {
@@ -39,9 +40,15 @@ export interface SetSubmittingAction {
   payload: boolean;
 }
 
+export interface SetSubmitErrorAction {
+  type: FormActionType.SET_SUBMIT_ERROR;
+  payload: string | null;
+}
+
 export type FormAction =
   | SetValueAction
   | SetErrorsAction
   | SetTouchedAction
   | ClearErrorsAction
-  | SetSubmittingAction;
+  | SetSubmittingAction
+  | SetSubmitErrorAction;

@@ -1,31 +1,24 @@
+import DateFnsUtils from "@date-io/date-fns";
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import { Theme } from "@material-ui/core/styles/createMuiTheme";
+import TextField from "@material-ui/core/TextField";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import { makeStyles } from "@material-ui/styles";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setValues, setTouched } from "./store/form/form.actions";
+import { setTouched, setValues } from "./store/form/form.actions";
+import { FormState } from "./store/form/form.state";
+import { submitForm } from "./store/form/form.thunks";
 import { RootState } from "./store/root/root.reducer";
-import { makeStyles } from "@material-ui/styles";
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
-import {
-  FormValues,
-  FormErrors,
-  FormTouched,
-  FormState,
-} from "./store/form/form.state";
-import { Theme } from "@material-ui/core/styles/createMuiTheme";
-import Button from "@material-ui/core/Button";
-import { apiClient } from "./configureClient";
-
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
-    width: "300px",
     margin: "0 auto",
+    width: "400px",
   },
   input: {
     display: "block",
@@ -35,12 +28,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Form = () => {
   const formState = useSelector<RootState, FormState>(state => state.form);
+  const { values, errors, touched, isSubmitting } = formState;
 
-  const values = useSelector<RootState, FormValues>(state => state.form.values);
-  const errors = useSelector<RootState, FormErrors>(state => state.form.errors);
-  const touched = useSelector<RootState, FormTouched>(
-    state => state.form.touched,
-  );
   const dispatch = useDispatch();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.persist();
@@ -54,6 +43,7 @@ const Form = () => {
   };
   const handleSubmit = (event: React.MouseEvent) => {
     event.preventDefault();
+    dispatch(submitForm());
   };
   const classes = useStyles();
 
@@ -63,17 +53,10 @@ const Form = () => {
     }
   };
 
-  const onClick = async () => {
-    const res = await apiClient.postEvent({
-      eventDto: {
-        firstName: "first name",
-        lastName: "last name",
-        email: "new@email.com",
-        date: "2019-07-13T08:47:46Z",
-      },
-    });
-    console.log(res.body);
-  };
+  const hasFormError = Object.values(errors).reduce(
+    (prev, curr) => prev || curr !== null,
+    false,
+  );
 
   return (
     <Paper className={classes.paper}>
@@ -127,7 +110,9 @@ const Form = () => {
           }}
         />
       </MuiPickersUtilsProvider>
-      <Button onClick={onClick}>Click me</Button>
+      <Button disabled={hasFormError || isSubmitting} onClick={handleSubmit}>
+        Submit
+      </Button>
       <pre>{JSON.stringify(formState, null, 2)}</pre>
     </Paper>
   );
