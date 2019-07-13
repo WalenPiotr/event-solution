@@ -41,7 +41,7 @@ export function formReducer(
     case FormActionType.SET_SUBMITTING: {
       return {
         ...state,
-        setSubmitting: action.payload,
+        submitting: action.payload,
       };
     }
 

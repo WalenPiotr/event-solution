@@ -49,4 +49,5 @@ export class FormState {
   values: FormValues = new FormValues();
   errors: FormErrors = validateFormValues(new FormValues());
   touched: FormTouched = new FormTouched();
+  submitting: boolean = false;
 }
