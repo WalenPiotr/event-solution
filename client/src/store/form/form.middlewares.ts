@@ -2,7 +2,7 @@ import { Dispatch, Middleware, MiddlewareAPI } from "redux";
 import { RootState } from "../root/root.reducer";
 import { setErrors } from "./form.actions";
 import { FormAction, FormActionType } from "./form.types";
-import { validateFormValues } from "./form.interfaces";
+import { validateFormValues } from "./form.state";
 
 export const formValidationMiddleware: Middleware = ({
   getState,

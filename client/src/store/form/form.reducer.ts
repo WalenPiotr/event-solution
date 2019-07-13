@@ -1,5 +1,5 @@
 import { FormActionType, FormAction } from "./form.types";
-import { FormErrors, FormState } from "./form.interfaces";
+import { FormErrors, FormState } from "./form.state";
 
 export function formReducer(
   state = new FormState(),
@@ -38,6 +38,13 @@ export function formReducer(
         },
       };
     }
+    case FormActionType.SET_SUBMITTING: {
+      return {
+        ...state,
+        setSubmitting: action.payload,
+      };
+    }
+
     default:
       return state;
   }

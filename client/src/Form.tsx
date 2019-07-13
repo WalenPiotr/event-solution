@@ -10,7 +10,7 @@ import {
   FormErrors,
   FormTouched,
   FormState,
-} from "./store/form/form.interfaces";
+} from "./store/form/form.state";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import Button from "@material-ui/core/Button";
 import { apiClient } from "./configureClient";
