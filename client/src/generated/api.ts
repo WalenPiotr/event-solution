@@ -81,31 +81,31 @@ export class RequiredError extends Error {
 /**
  * 
  * @export
- * @interface EventDto
+ * @interface EntryDto
  */
-export interface EventDto {
+export interface EntryDto {
     /**
      * 
      * @type {string}
-     * @memberof EventDto
+     * @memberof EntryDto
      */
     firstName: string;
     /**
      * 
      * @type {string}
-     * @memberof EventDto
+     * @memberof EntryDto
      */
     lastName: string;
     /**
      * 
      * @type {string}
-     * @memberof EventDto
+     * @memberof EntryDto
      */
     email: string;
     /**
      * 
      * @type {Date}
-     * @memberof EventDto
+     * @memberof EntryDto
      */
     date: Date;
 }
@@ -123,12 +123,12 @@ export const DefaultApiFetchParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        eventDelete(id: string, options: any = {}): FetchArgs {
+        entryDelete(id: string, options: any = {}): FetchArgs {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling eventDelete.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling entryDelete.');
             }
-            const localVarPath = `/event`
+            const localVarPath = `/entry`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
@@ -150,8 +150,8 @@ export const DefaultApiFetchParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        eventGet(options: any = {}): FetchArgs {
-            const localVarPath = `/event`;
+        entryGet(options: any = {}): FetchArgs {
+            const localVarPath = `/entry`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -169,16 +169,16 @@ export const DefaultApiFetchParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @param {EventDto} eventDto 
+         * @param {EntryDto} entryDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        eventPost(eventDto: EventDto, options: any = {}): FetchArgs {
-            // verify required parameter 'eventDto' is not null or undefined
-            if (eventDto === null || eventDto === undefined) {
-                throw new RequiredError('eventDto','Required parameter eventDto was null or undefined when calling eventPost.');
+        entryPost(entryDto: EntryDto, options: any = {}): FetchArgs {
+            // verify required parameter 'entryDto' is not null or undefined
+            if (entryDto === null || entryDto === undefined) {
+                throw new RequiredError('entryDto','Required parameter entryDto was null or undefined when calling entryPost.');
             }
-            const localVarPath = `/event`;
+            const localVarPath = `/entry`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
@@ -190,8 +190,8 @@ export const DefaultApiFetchParamCreator = function (configuration?: Configurati
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"EventDto" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(eventDto || {}) : (eventDto || "");
+            const needsSerialization = (<any>"EntryDto" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(entryDto || {}) : (entryDto || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -213,8 +213,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        eventDelete(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = DefaultApiFetchParamCreator(configuration).eventDelete(id, options);
+        entryDelete(id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = DefaultApiFetchParamCreator(configuration).entryDelete(id, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -230,8 +230,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        eventGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = DefaultApiFetchParamCreator(configuration).eventGet(options);
+        entryGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = DefaultApiFetchParamCreator(configuration).entryGet(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -244,12 +244,12 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {EventDto} eventDto 
+         * @param {EntryDto} entryDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        eventPost(eventDto: EventDto, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = DefaultApiFetchParamCreator(configuration).eventPost(eventDto, options);
+        entryPost(entryDto: EntryDto, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = DefaultApiFetchParamCreator(configuration).entryPost(entryDto, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -275,25 +275,25 @@ export const DefaultApiFactory = function (configuration?: Configuration, fetch?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        eventDelete(id: string, options?: any) {
-            return DefaultApiFp(configuration).eventDelete(id, options)(fetch, basePath);
+        entryDelete(id: string, options?: any) {
+            return DefaultApiFp(configuration).entryDelete(id, options)(fetch, basePath);
         },
         /**
          * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        eventGet(options?: any) {
-            return DefaultApiFp(configuration).eventGet(options)(fetch, basePath);
+        entryGet(options?: any) {
+            return DefaultApiFp(configuration).entryGet(options)(fetch, basePath);
         },
         /**
          * 
-         * @param {EventDto} eventDto 
+         * @param {EntryDto} entryDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        eventPost(eventDto: EventDto, options?: any) {
-            return DefaultApiFp(configuration).eventPost(eventDto, options)(fetch, basePath);
+        entryPost(entryDto: EntryDto, options?: any) {
+            return DefaultApiFp(configuration).entryPost(entryDto, options)(fetch, basePath);
         },
     };
 };
@@ -312,8 +312,8 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public eventDelete(id: string, options?: any) {
-        return DefaultApiFp(this.configuration).eventDelete(id, options)(this.fetch, this.basePath);
+    public entryDelete(id: string, options?: any) {
+        return DefaultApiFp(this.configuration).entryDelete(id, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -322,19 +322,19 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public eventGet(options?: any) {
-        return DefaultApiFp(this.configuration).eventGet(options)(this.fetch, this.basePath);
+    public entryGet(options?: any) {
+        return DefaultApiFp(this.configuration).entryGet(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @param {EventDto} eventDto 
+     * @param {EntryDto} entryDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public eventPost(eventDto: EventDto, options?: any) {
-        return DefaultApiFp(this.configuration).eventPost(eventDto, options)(this.fetch, this.basePath);
+    public entryPost(entryDto: EntryDto, options?: any) {
+        return DefaultApiFp(this.configuration).entryPost(entryDto, options)(this.fetch, this.basePath);
     }
 
 }

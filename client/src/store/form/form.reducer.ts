@@ -1,5 +1,5 @@
 import { FormActionType, FormAction } from "./form.types";
-import { FormErrors, FormState } from "./form.state";
+import { FormErrors, FormState, FormValues, FormTouched } from "./form.state";
 
 export function formReducer(
   state = new FormState(),
@@ -13,6 +13,11 @@ export function formReducer(
           ...state.values,
           ...action.payload,
         },
+      };
+    case FormActionType.CLEAR_ALL_VALUES:
+      return {
+        ...state,
+        values: new FormValues(),
       };
     case FormActionType.SET_ERRORS:
       return {
@@ -30,14 +35,12 @@ export function formReducer(
           ...action.payload,
         },
       };
-    case FormActionType.CLEAR_ERRORS: {
+    case FormActionType.CLEAR_ALL_TOUCHED:
       return {
         ...state,
-        errors: {
-          ...new FormErrors(),
-        },
+        touched: new FormTouched(),
       };
-    }
+
     case FormActionType.SET_SUBMITTING: {
       return {
         ...state,

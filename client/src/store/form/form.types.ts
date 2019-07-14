@@ -3,9 +3,11 @@ import { plainToClass } from "class-transformer";
 
 export enum FormActionType {
   SET_VALUES = "SET_VALUES",
+  CLEAR_ALL_VALUES = "CLEAR_ALL_VALUES",
   SET_ERRORS = "SET_ERRORS",
   SET_TOUCHED = "SET_TOUCHED",
-  CLEAR_ERRORS = "CLEAR_ERRORS",
+  SET_ALL_TOUCHED = "SET_ALL_TOUCHED",
+  CLEAR_ALL_TOUCHED = "CLEAR_ALL_TOUCHED",
   SET_SUBMITTING = "SET_SUBMITTING",
   SET_SUBMIT_ERROR = "SET_SUBMIT_ERROR",
 }
@@ -15,6 +17,10 @@ export interface SetValueAction {
   payload: {
     [key: string]: string | Date;
   };
+}
+
+export interface ClearAllValues {
+  type: FormActionType.CLEAR_ALL_VALUES;
 }
 
 export interface SetErrorsAction {
@@ -31,8 +37,12 @@ export interface SetTouchedAction {
   };
 }
 
-export interface ClearErrorsAction {
-  type: FormActionType.CLEAR_ERRORS;
+export interface SetAllTouched {
+  type: FormActionType.SET_ALL_TOUCHED;
+}
+
+export interface ClearAllTouched {
+  type: FormActionType.CLEAR_ALL_TOUCHED;
 }
 
 export interface SetSubmittingAction {
@@ -46,9 +56,11 @@ export interface SetSubmitErrorAction {
 }
 
 export type FormAction =
+  | ClearAllTouched
+  | ClearAllValues
+  | SetAllTouched
   | SetValueAction
   | SetErrorsAction
   | SetTouchedAction
-  | ClearErrorsAction
   | SetSubmittingAction
   | SetSubmitErrorAction;

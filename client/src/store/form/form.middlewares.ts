@@ -1,8 +1,7 @@
 import { Dispatch, Middleware, MiddlewareAPI } from "redux";
 import { RootState } from "../root/root.reducer";
-import { setErrors } from "./form.actions";
 import { FormAction, FormActionType } from "./form.types";
-import { validateFormValues } from "./form.state";
+import { validateFormValues, FormValues } from "./form.state";
 
 export const formValidationMiddleware: Middleware = ({
   getState,
@@ -14,7 +13,12 @@ export const formValidationMiddleware: Middleware = ({
     const { values } = getState().form;
     const updatedValues = { ...values, ...action.payload };
     const formErrors = validateFormValues(updatedValues);
-    dispatch(setErrors(formErrors));
+    dispatch({ type: FormActionType.SET_ERRORS, payload: formErrors });
   }
+  if (action.type === FormActionType.CLEAR_ALL_VALUES) {
+    const formErrors = validateFormValues(new FormValues());
+    dispatch({ type: FormActionType.SET_ERRORS, payload: formErrors });
+  }
+
   return next(action);
 };

@@ -3,7 +3,7 @@ import { EntryDto } from './dto/Entry.dto';
 import { EntryService } from './entry.service';
 import { Entry } from './interface/entry.interface';
 
-@Controller('event')
+@Controller('entry')
 export class EntryController {
   constructor(private readonly appService: EntryService) {}
   @Post()

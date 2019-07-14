@@ -3,26 +3,33 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles, withStyles } from "@material-ui/styles";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setTouched, setValues } from "./store/form/form.actions";
-import { FormState } from "./store/form/form.state";
-import { submitForm } from "./store/form/form.thunks";
-import { RootState } from "./store/root/root.reducer";
+import { setTouched, setValues } from "../store/form/form.actions";
+import { FormState } from "../store/form/form.state";
+import { submitForm } from "../store/form/form.actions";
+import { RootState } from "../store/root/root.reducer";
+import green from "@material-ui/core/colors/green";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
     margin: "0 auto",
     width: "400px",
+    padding: theme.spacing(2),
   },
   input: {
     display: "block",
-    margin: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+  inputGood: {
+    color: "green",
+    // backgroundColor: "red",
   },
 }));
 
@@ -60,6 +67,7 @@ const Form = () => {
 
   return (
     <Paper className={classes.paper}>
+      <Typography variant="h6">Enter data</Typography>
       <TextField
         name="firstName"
         label="first name"
@@ -95,25 +103,38 @@ const Form = () => {
         onBlur={handleBlur}
         error={Boolean(errors.email && touched.email)}
         helperText={Boolean(errors.email && touched.email) ? errors.email : ""}
+        InputProps={{
+          className: Boolean(touched.email && !errors.email)
+            ? classes.inputGood
+            : "",
+        }}
         className={classes.input}
         fullWidth
       />
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          margin="normal"
-          id="mui-pickers-date"
-          label="Date picker"
-          value={values.date}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            "aria-label": "change date",
-          }}
-        />
-      </MuiPickersUtilsProvider>
-      <Button disabled={hasFormError || isSubmitting} onClick={handleSubmit}>
+      <div className={classes.input}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            margin="normal"
+            id="mui-pickers-date"
+            label="Date picker"
+            value={values.date}
+            onChange={handleDateChange}
+            KeyboardButtonProps={{
+              "aria-label": "change date",
+            }}
+            fullWidth
+          />
+        </MuiPickersUtilsProvider>
+      </div>
+      <Button
+        disabled={isSubmitting || hasFormError}
+        onClick={handleSubmit}
+        fullWidth
+        variant="contained"
+        color="primary"
+      >
         Submit
       </Button>
-      <pre>{JSON.stringify(formState, null, 2)}</pre>
     </Paper>
   );
 };

@@ -17,5 +17,5 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false
   },
-  "include": ["src", "swagger.ts"]
+  "include": ["src"]
 }
