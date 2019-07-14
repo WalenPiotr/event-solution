@@ -2,7 +2,7 @@ import { ApiModelProperty } from '@nestjs/swagger';
 import { MinLength, IsEmail, IsDate } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class EventDto {
+export class EntryDto {
   @ApiModelProperty({ example: 'John', minLength: 1 })
   @MinLength(1)
   firstName: string;
