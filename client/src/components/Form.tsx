@@ -103,11 +103,6 @@ const Form = () => {
         onBlur={handleBlur}
         error={Boolean(errors.email && touched.email)}
         helperText={Boolean(errors.email && touched.email) ? errors.email : ""}
-        InputProps={{
-          className: Boolean(touched.email && !errors.email)
-            ? classes.inputGood
-            : "",
-        }}
         className={classes.input}
         fullWidth
       />
