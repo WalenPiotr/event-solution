@@ -11,8 +11,7 @@ export class EntryService {
     this.entryModel = entryModel;
   }
   async create(entry: EntryDto): Promise<Entry> {
-    const createdEntry = new this.entryModel(entry);
-    return createdEntry.save();
+    return this.entryModel.create(entry);
   }
 
   async findAll(): Promise<Entry[]> {
