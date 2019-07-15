@@ -7,8 +7,10 @@ import { makeStyles } from "@material-ui/styles";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEntry } from "../store/entries/entries.actions";
-import { Entry } from "../store/entries/entries.state";
+import { Entry, EntriesState } from "../store/entries/entries.state";
 import { RootState } from "../store/root/root.reducer";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import ErrorIcon from "@material-ui/icons/ErrorOutline";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -20,20 +22,60 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "space-between",
   },
   fab: {},
+  spinnerBox: {
+    margin: "0 auto",
+    marginTop: theme.spacing(7),
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  spinnerText: {
+    marginTop: theme.spacing(1),
+  },
 }));
 
 const EntryView = () => {
-  const entries = useSelector<RootState, Entry[]>(state => state.entries.items);
+  const { items, fetching, fetchError } = useSelector<RootState, EntriesState>(
+    state => state.entries,
+  );
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleClick = (id: string) => (event: React.MouseEvent) => {
     event.preventDefault();
-    console.log(id);
     dispatch(deleteEntry(id));
   };
+  if (fetchError) {
+    return (
+      <div className={classes.spinnerBox}>
+        <ErrorIcon color="error" style={{ fontSize: 60 }} />
+        <Typography
+          variant="subtitle1"
+          color="error"
+          className={classes.spinnerText}
+        >
+          Something went wrong
+        </Typography>
+      </div>
+    );
+  }
+  if (fetching) {
+    return (
+      <div className={classes.spinnerBox}>
+        <CircularProgress size={50} />
+        <Typography
+          variant="subtitle1"
+          color="primary"
+          className={classes.spinnerText}
+        >
+          Loading already added entries...
+        </Typography>
+      </div>
+    );
+  }
   return (
     <div>
-      {entries.map(e => (
+      {items.map(e => (
         <Paper key={e._id} className={classes.paper}>
           <div>
             <Typography variant="subtitle1">
