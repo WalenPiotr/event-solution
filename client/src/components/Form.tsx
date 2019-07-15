@@ -16,6 +16,7 @@ import { FormState } from "../store/form/form.state";
 import { submitForm } from "../store/form/form.actions";
 import { RootState } from "../store/root/root.reducer";
 import green from "@material-ui/core/colors/green";
+import ErrorIcon from "@material-ui/icons/ErrorOutline";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -27,15 +28,26 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "block",
     marginBottom: theme.spacing(2),
   },
-  inputGood: {
-    color: "green",
-    // backgroundColor: "red",
+  errorBox: {
+    display: "flex",
+    justifyContent: "center",
+    marginBottom: theme.spacing(2),
+  },
+  errorIcon: {
+    marginRight: theme.spacing(1),
   },
 }));
 
 const Form = () => {
   const formState = useSelector<RootState, FormState>(state => state.form);
-  const { values, errors, touched, isSubmitting } = formState;
+  const {
+    values,
+    errors,
+    touched,
+    isSubmitting,
+    submitError,
+    alreadyExistsError,
+  } = formState;
 
   const dispatch = useDispatch();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,8 +108,17 @@ const Form = () => {
         value={values.email}
         onChange={handleChange}
         onBlur={handleBlur}
-        error={Boolean(errors.email && touched.email)}
-        helperText={Boolean(errors.email && touched.email) ? errors.email : ""}
+        error={
+          Boolean(errors.email && touched.email) ||
+          Boolean(alreadyExistsError && touched.email)
+        }
+        helperText={
+          Boolean(errors.email && touched.email)
+            ? errors.email
+            : Boolean(alreadyExistsError && touched.email)
+            ? alreadyExistsError
+            : ""
+        }
         className={classes.input}
         fullWidth
       />
@@ -116,6 +137,16 @@ const Form = () => {
           />
         </MuiPickersUtilsProvider>
       </div>
+
+      {submitError ? (
+        <div className={classes.errorBox}>
+          <ErrorIcon color="error" className={classes.errorIcon} />
+          <Typography color="error" variant="subtitle1">
+            {submitError}
+          </Typography>
+        </div>
+      ) : null}
+
       <Button
         disabled={isSubmitting}
         onClick={handleSubmit}

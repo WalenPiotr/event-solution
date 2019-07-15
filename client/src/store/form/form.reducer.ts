@@ -60,6 +60,19 @@ export function formReducer(
         submitError: action.payload,
       };
     }
+    case FormActionType.SET_ALREADY_EXISTS_ERROR: {
+      return {
+        ...state,
+        alreadyExistsError: action.payload,
+      };
+    }
+    case FormActionType.CLEAR_API_ERRORS: {
+      return {
+        ...state,
+        alreadyExistsError: null,
+        submitError: null,
+      };
+    }
     default:
       return state;
   }

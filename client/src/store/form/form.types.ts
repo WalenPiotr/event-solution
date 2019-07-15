@@ -11,6 +11,8 @@ export enum FormActionType {
   CLEAR_ALL_TOUCHED = "CLEAR_ALL_TOUCHED",
   SET_SUBMITTING = "SET_SUBMITTING",
   SET_SUBMIT_ERROR = "SET_SUBMIT_ERROR",
+  SET_ALREADY_EXISTS_ERROR = "SET_ALREADY_EXISTS_ERROR",
+  CLEAR_API_ERRORS = "CLEAR_API_ERRORS",
 }
 
 export interface SetValueAction {
@@ -50,6 +52,15 @@ export interface SetSubmitErrorAction {
   payload: string | null;
 }
 
+export interface SetAlreadyExistsErrorAction {
+  type: FormActionType.SET_ALREADY_EXISTS_ERROR;
+  payload: string | null;
+}
+
+export interface ClearAPIErrorsAction {
+  type: FormActionType.CLEAR_API_ERRORS;
+}
+
 export type FormAction =
   | ClearAllTouched
   | ClearAllValues
@@ -58,4 +69,6 @@ export type FormAction =
   | SetErrorsAction
   | SetTouchedAction
   | SetSubmittingAction
-  | SetSubmitErrorAction;
+  | SetSubmitErrorAction
+  | SetAlreadyExistsErrorAction
+  | ClearAPIErrorsAction;

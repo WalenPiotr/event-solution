@@ -13,6 +13,7 @@ export const formValidationMiddleware: Middleware = ({
     const { values } = getState().form;
     const updatedValues = { ...values, ...action.payload };
     const formErrors = validateFormValues(updatedValues);
+    dispatch({ type: FormActionType.CLEAR_API_ERRORS });
     dispatch({ type: FormActionType.SET_ERRORS, payload: formErrors });
   }
   if (action.type === FormActionType.CLEAR_ALL_VALUES) {

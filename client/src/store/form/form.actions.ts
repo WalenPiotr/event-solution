@@ -41,6 +41,16 @@ export const submitForm = (): ThunkAction<
     const payload = await response.json();
     //here dispatch fetch new event list
   } catch (err) {
+    if (err.status && err.status === 409) {
+      const errPayload = await err.json();
+      console.error(errPayload);
+      dispatch({
+        type: FormActionType.SET_ALREADY_EXISTS_ERROR,
+        payload: errPayload.message,
+      });
+      dispatch({ type: FormActionType.SET_SUBMITTING, payload: false });
+      return;
+    }
     if (err.status && err.status === 400) {
       const errPayload = await err.json();
       console.error(errPayload);
@@ -48,12 +58,15 @@ export const submitForm = (): ThunkAction<
         type: FormActionType.SET_SUBMIT_ERROR,
         payload: "Invalid Request",
       });
-    } else {
-      dispatch({
-        type: FormActionType.SET_SUBMIT_ERROR,
-        payload: "Connection Error",
-      });
+      dispatch({ type: FormActionType.SET_SUBMITTING, payload: false });
+      return;
     }
+    dispatch({
+      type: FormActionType.SET_SUBMIT_ERROR,
+      payload: "Connection Error",
+    });
+    dispatch({ type: FormActionType.SET_SUBMITTING, payload: false });
+    return;
   }
   dispatch(fetchData());
   dispatch({ type: FormActionType.CLEAR_ALL_VALUES, payload: false });

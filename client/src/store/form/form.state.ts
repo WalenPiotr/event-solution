@@ -50,4 +50,5 @@ export class FormState {
   touched: FormTouched = new FormTouched();
   isSubmitting: boolean = false;
   submitError: string | null = null;
+  alreadyExistsError: string | null = null;
 }
