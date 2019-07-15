@@ -7,7 +7,7 @@ export class CreateEntryFilter implements ExceptionFilter {
     const response = host.switchToHttp().getResponse();
     if (exception.code === 11000) {
       response
-        .status(400)
+        .status(409)
         .json({ message: 'Entry with same email already exists.' });
     } else {
       response.status(500).json({ message: 'Internal error.' });
