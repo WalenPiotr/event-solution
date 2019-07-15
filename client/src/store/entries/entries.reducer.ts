@@ -16,10 +16,20 @@ export function entriesReducer(
         ...state,
         fetching: action.payload,
       };
-    case EntriesActionType.SET_ERROR:
+    case EntriesActionType.SET_FETCH_ERROR:
       return {
         ...state,
-        error: action.payload,
+        fetchError: action.payload,
+      };
+    case EntriesActionType.SET_DELETING:
+      return {
+        ...state,
+        deleting: action.payload,
+      };
+    case EntriesActionType.SET_DELETE_ERROR:
+      return {
+        ...state,
+        deleteError: action.payload,
       };
     default:
       return state;

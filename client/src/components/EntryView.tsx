@@ -1,15 +1,14 @@
-import React from "react";
-
-import { useSelector } from "react-redux";
-import { RootState } from "../store/root/root.reducer";
-import { Entry } from "../store/entries/entries.state";
-
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/styles";
-import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import Fab from "@material-ui/core/Fab";
+import Paper from "@material-ui/core/Paper";
+import { Theme } from "@material-ui/core/styles/createMuiTheme";
+import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { makeStyles } from "@material-ui/styles";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteEntry } from "../store/entries/entries.actions";
+import { Entry } from "../store/entries/entries.state";
+import { RootState } from "../store/root/root.reducer";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -26,6 +25,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 const EntryView = () => {
   const entries = useSelector<RootState, Entry[]>(state => state.entries.items);
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const handleClick = (id: string) => (event: React.MouseEvent) => {
+    event.preventDefault();
+    console.log(id);
+    dispatch(deleteEntry(id));
+  };
   return (
     <div>
       {entries.map(e => (
@@ -50,6 +55,7 @@ const EntryView = () => {
               aria-label="Delete"
               className={classes.fab}
               size="small"
+              onClick={handleClick(e._id)}
             >
               <DeleteIcon />
             </Fab>

@@ -25,19 +25,60 @@ export const fetchData = (): ThunkAction<
       const errPayload = await err.json();
       console.error(errPayload);
       dispatch({
-        type: EntriesActionType.SET_ERROR,
+        type: EntriesActionType.SET_FETCH_ERROR,
         payload: "Invalid Request",
       });
       return;
     } else {
+      console.error(err);
       dispatch({
-        type: EntriesActionType.SET_ERROR,
+        type: EntriesActionType.SET_FETCH_ERROR,
         payload: "Connection Error",
       });
     }
   }
   dispatch({
     type: EntriesActionType.SET_FETCHING,
+    payload: false,
+  });
+};
+
+export const deleteEntry = (
+  id: string,
+): ThunkAction<void, RootState, null, EntriesAction> => async (
+  dispatch,
+  getState,
+) => {
+  dispatch({
+    type: EntriesActionType.SET_DELETING,
+    payload: true,
+  });
+  try {
+    const response = await apiClient.entryIdDelete(id);
+    console.log(response);
+    // const payload = await response.json();
+    // console.log(payload);
+
+    dispatch(fetchData());
+  } catch (err) {
+    if (err.status && err.status === 400) {
+      const errPayload = await err.json();
+      console.error(errPayload);
+      dispatch({
+        type: EntriesActionType.SET_DELETE_ERROR,
+        payload: "Invalid Request",
+      });
+      return;
+    } else {
+      console.error(err);
+      dispatch({
+        type: EntriesActionType.SET_DELETE_ERROR,
+        payload: "Connection Error",
+      });
+    }
+  }
+  dispatch({
+    type: EntriesActionType.SET_DELETING,
     payload: false,
   });
 };

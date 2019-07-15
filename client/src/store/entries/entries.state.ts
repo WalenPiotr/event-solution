@@ -9,6 +9,8 @@ export interface Entry {
 
 export class EntriesState {
   items: Entry[] = [];
-  error: string | null = null;
+  fetchError: string | null = null;
   fetching: boolean = false;
+  deleteError: string | null = null;
+  deleting: boolean = false;
 }
