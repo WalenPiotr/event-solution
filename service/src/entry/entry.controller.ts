@@ -10,7 +10,7 @@ import {
 import { EntryDto } from './dto/Entry.dto';
 import { EntryService } from './entry.service';
 import { Entry } from './interface/entry.interface';
-import { CreateEntryFilter } from 'src/filters/CreateEntryFilter';
+import { CreateEntryFilter } from '../filters/CreateEntryFilter';
 
 @Controller('entry')
 export class EntryController {
