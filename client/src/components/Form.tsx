@@ -60,11 +60,6 @@ const Form = () => {
     }
   };
 
-  const hasFormError = Object.values(errors).reduce(
-    (prev, curr) => prev || curr !== null,
-    false,
-  );
-
   return (
     <Paper className={classes.paper}>
       <Typography variant="h6">Enter data</Typography>
@@ -122,7 +117,7 @@ const Form = () => {
         </MuiPickersUtilsProvider>
       </div>
       <Button
-        disabled={isSubmitting || hasFormError}
+        disabled={isSubmitting}
         onClick={handleSubmit}
         fullWidth
         variant="contained"

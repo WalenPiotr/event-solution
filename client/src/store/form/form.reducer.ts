@@ -40,7 +40,14 @@ export function formReducer(
         ...state,
         touched: new FormTouched(),
       };
-
+    case FormActionType.SET_ALL_TOUCHED:
+      return {
+        ...state,
+        touched: Object.entries(new FormTouched()).reduce(
+          (o, [field, value]) => ({ ...o, [field]: true }),
+          new FormTouched(),
+        ),
+      };
     case FormActionType.SET_SUBMITTING: {
       return {
         ...state,

@@ -10,11 +10,10 @@ export class FormValues {
     {},
     { message: "please enter email in valid format (ex. user@example.com)" },
   )
-  @MinLength(1)
+  @MinLength(1, { message: "please enter your email" })
   email: string = "";
   @IsDate({ message: "please enter valid date" })
   date: Date = new Date();
-  [key: string]: string | Date;
 }
 
 export const validateFormValues = (
@@ -36,7 +35,6 @@ export class FormErrors {
   lastName: string | null = null;
   email: string | null = null;
   date: string | null = null;
-  [key: string]: string | null;
 }
 
 export class FormTouched {
@@ -44,7 +42,6 @@ export class FormTouched {
   lastName: boolean = false;
   email: boolean = false;
   date: boolean = true;
-  [key: string]: boolean;
 }
 
 export class FormState {

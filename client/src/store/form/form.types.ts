@@ -1,5 +1,6 @@
 import { MinLength, validate, validateSync, IsEmail } from "class-validator";
 import { plainToClass } from "class-transformer";
+import { FormValues, FormErrors, FormTouched } from "./form.state";
 
 export enum FormActionType {
   SET_VALUES = "SET_VALUES",
@@ -14,9 +15,7 @@ export enum FormActionType {
 
 export interface SetValueAction {
   type: FormActionType.SET_VALUES;
-  payload: {
-    [key: string]: string | Date;
-  };
+  payload: Partial<FormValues>;
 }
 
 export interface ClearAllValues {
@@ -25,16 +24,12 @@ export interface ClearAllValues {
 
 export interface SetErrorsAction {
   type: FormActionType.SET_ERRORS;
-  payload: {
-    [key: string]: string | null;
-  };
+  payload: Partial<FormErrors>;
 }
 
 export interface SetTouchedAction {
   type: FormActionType.SET_TOUCHED;
-  payload: {
-    [key: string]: boolean;
-  };
+  payload: Partial<FormTouched>;
 }
 
 export interface SetAllTouched {
