@@ -14,7 +14,7 @@ export class EntryController {
   findAll(): Promise<Entry[]> {
     return this.appService.findAll();
   }
-  @Delete()
+  @Delete(':id')
   delete(@Param('id') id: string): Promise<Entry> {
     return this.appService.delete(id);
   }
