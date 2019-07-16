@@ -122,10 +122,6 @@ describe("form epic tests", () => {
           entryIdDelete: jest.fn(entryDeleteStub),
         },
       };
-
-      const res = await dependencies.apiClient.entryIdDelete("1");
-      console.warn(await res.json());
-
       const output$ = deleteEntryEpic(action$, state$, dependencies as any);
       expect(await output$.toPromise()).toEqual({
         type: EntriesActionType.DELETE_ENTRY_SUCCESS,
