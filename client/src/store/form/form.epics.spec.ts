@@ -10,12 +10,6 @@ import { EntriesActionType } from "../entries/entries.types";
 import { toArray, take } from "rxjs/operators";
 
 describe("form epic tests", () => {
-  let testScheduler: TestScheduler;
-  beforeEach(() => {
-    testScheduler = new TestScheduler((actual, expected) => {
-      expect(actual).toEqual(expected);
-    });
-  });
   it("should return CancelSubmitFormAction when state has form errors", async () => {
     const action$ = new ActionsObservable(
       of({
