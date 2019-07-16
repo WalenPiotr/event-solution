@@ -11,6 +11,7 @@ import { Entry, EntriesState } from "../store/entries/entries.state";
 import { RootState } from "../store/root/root.reducer";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ErrorIcon from "@material-ui/icons/ErrorOutline";
+import { FetchErrorMsg } from "../errors";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -54,7 +55,15 @@ const EntryView = () => {
           color="error"
           className={classes.spinnerText}
         >
-          Something went wrong
+          {fetchError === FetchErrorMsg.INTERNAL_ERROR
+            ? "Unexpected Error"
+            : null}
+          {fetchError === FetchErrorMsg.INVALID_ARGUMENT
+            ? "Unexpected Error"
+            : null}
+          {fetchError === FetchErrorMsg.CONNECTION_ERROR
+            ? "Connection Error"
+            : null}
         </Typography>
       </div>
     );

@@ -137,7 +137,18 @@ const Form = () => {
         <div className={classes.errorBox}>
           <ErrorIcon color="error" className={classes.errorIcon} />
           <Typography color="error" variant="subtitle1">
-            {submitError}
+            {submitError === FetchErrorMsg.ALREADY_EXISTS
+              ? "Entry with given name already exists"
+              : null}
+            {submitError === FetchErrorMsg.INTERNAL_ERROR
+              ? "Unexpected Error"
+              : null}
+            {submitError === FetchErrorMsg.INVALID_ARGUMENT
+              ? "Unexpected Error"
+              : null}
+            {submitError === FetchErrorMsg.CONNECTION_ERROR
+              ? "Connection Error"
+              : null}
           </Typography>
         </div>
       ) : null}

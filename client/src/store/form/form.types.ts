@@ -7,6 +7,7 @@ export enum FormActionType {
   SUBMIT_FORM = "SUBMIT_FORM",
   SUBMIT_FORM_SUCCESS = "SUBMIT_FORM_SUCCESS",
   SUBMIT_FORM_FAILURE = "SUBMIT_FORM_FAILURE",
+  CANCEL_SUBMIT = "CANCEL_SUBMIT",
 
   SET_VALUES = "SET_VALUES",
   SET_TOUCHED = "SET_TOUCHED",
@@ -26,6 +27,10 @@ export interface SubmitFormAction {
   type: FormActionType.SUBMIT_FORM;
 }
 
+export interface CancelSubmitFormAction {
+  type: FormActionType.CANCEL_SUBMIT;
+}
+
 export interface SubmitFormFailureAction {
   type: FormActionType.SUBMIT_FORM_FAILURE;
   message: FetchErrorMsg;
@@ -40,4 +45,5 @@ export type FormAction =
   | SubmitFormFailureAction
   | SubmitFormSuccessAction
   | SetValuesAction
-  | SetTouchedAction;
+  | SetTouchedAction
+  | CancelSubmitFormAction;

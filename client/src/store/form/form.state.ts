@@ -38,6 +38,9 @@ export const validateFormValues = (
   );
 };
 
+export const hasFormError = (errors: FormErrors) =>
+  Object.values(errors).reduce((prev, curr) => prev || curr !== null, false);
+
 export class FormTouched {
   firstName: boolean = false;
   lastName: boolean = false;

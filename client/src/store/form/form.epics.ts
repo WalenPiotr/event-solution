@@ -1,31 +1,43 @@
-import { ofType, Epic, combineEpics } from "redux-observable";
+import { combineEpics, ofType } from "redux-observable";
+import { from, of } from "rxjs";
+import { catchError, switchMap, withLatestFrom } from "rxjs/operators";
+import { mapErrorToMessage } from "../../errors";
+import { EpicWithDependecies } from "../../reduxConfig";
+import { EntriesActionType, FetchDataAction } from "../entries/entries.types";
+import { RootState } from "../root/root.reducer";
+import { hasFormError } from "./form.state";
 import {
+  CancelSubmitFormAction,
   FormActionType,
   SubmitFormAction,
-  SubmitFormSuccessAction,
   SubmitFormFailureAction,
+  SubmitFormSuccessAction,
 } from "./form.types";
-import {
-  mergeMap,
-  merge,
-  catchError,
-  map,
-  withLatestFrom,
-} from "rxjs/operators";
-import { EpicWithDependecies } from "../../reduxConfig";
-import { FetchErrorMsg, mapErrorToMessage } from "../../errors";
-import { RootState } from "../root/root.reducer";
 
-const submitFormEpic: EpicWithDependecies = (action$, state$, { apiClient }) =>
+export const submitFormEpic: EpicWithDependecies = (
+  action$,
+  state$,
+  { apiClient },
+) =>
   action$.pipe(
     ofType(FormActionType.SUBMIT_FORM),
     withLatestFrom(state$),
-    mergeMap(async ([action, state]: [SubmitFormAction, RootState]) => {
-      const response = await apiClient.entryPost(state.form.values);
+    switchMap(([action, state]: [SubmitFormAction, RootState]) => {
+      if (hasFormError(state.form.errors)) {
+        const cancelAction: CancelSubmitFormAction = {
+          type: FormActionType.CANCEL_SUBMIT,
+        };
+        return of(cancelAction);
+      }
       const resultAction: SubmitFormSuccessAction = {
         type: FormActionType.SUBMIT_FORM_SUCCESS,
       };
-      return resultAction;
+      const refetchAction: FetchDataAction = {
+        type: EntriesActionType.FETCH_DATA,
+      };
+      return from(apiClient.entryPost(state.form.values)).pipe(
+        switchMap(() => of(resultAction, refetchAction)),
+      );
     }),
     catchError(async err => {
       const message = mapErrorToMessage(err);

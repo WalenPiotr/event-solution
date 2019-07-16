@@ -36,6 +36,9 @@ export function formReducer(
         isSubmitting: false,
       };
     }
+    case FormActionType.CANCEL_SUBMIT: {
+      return { ...state, isSubmitting: false };
+    }
     default:
       return state;
   }
