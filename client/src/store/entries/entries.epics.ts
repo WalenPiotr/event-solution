@@ -1,21 +1,22 @@
 import { combineEpics, Epic, ofType } from "redux-observable";
 import { catchError, mergeMap } from "rxjs/operators";
-import { apiClient } from "../../clientConfig";
+import { mapErrorToMessage } from "../../errors";
+import { EpicWithDependecies } from "../../reduxConfig";
 import {
   DeleteEntryAction,
+  DeleteEntryFailureAction,
+  DeleteEntrySuccessAction,
   EntriesActionType,
   FetchDataAction,
   FetchDataFailureAction,
   FetchDataSuccessAction,
-  DeleteEntrySuccessAction,
-  DeleteEntryFailureAction,
 } from "./entries.types";
-import { Action } from "redux";
-import { RootState } from "../root/root.reducer";
-import { Dependencies, EpicWithDependecies } from "../../reduxConfig";
-import { FetchErrorMsg, mapErrorToMessage } from "../../errors";
 
-const fetchDataEpic: EpicWithDependecies = (action$, state$, { apiClient }) =>
+export const fetchDataEpic: EpicWithDependecies = (
+  action$,
+  state$,
+  { apiClient },
+) =>
   action$.pipe(
     ofType(EntriesActionType.FETCH_DATA),
     mergeMap(async (action: FetchDataAction) => {
@@ -37,7 +38,7 @@ const fetchDataEpic: EpicWithDependecies = (action$, state$, { apiClient }) =>
     }),
   );
 
-const deleteEntryEpic: Epic = action$ =>
+export const deleteEntryEpic: Epic = (action$, state$, { apiClient }) =>
   action$.pipe(
     ofType(EntriesActionType.DELETE_ENTRY),
     mergeMap(async (action: DeleteEntryAction) => {

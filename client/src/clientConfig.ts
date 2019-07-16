@@ -1,3 +1,4 @@
 import { DefaultApi } from "./generated";
 
-export const apiClient = new DefaultApi({ basePath: "http://localhost:4000" });
+export const createApiClient = () =>
+  new DefaultApi({ basePath: "http://localhost:4000" });

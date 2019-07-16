@@ -2,12 +2,12 @@ import { applyMiddleware, createStore, Store, Action } from "redux";
 import logger from "redux-logger";
 import { createEpicMiddleware, Epic } from "redux-observable";
 import thunkMiddleware from "redux-thunk";
-import { apiClient } from "./clientConfig";
 import { DefaultApi } from "./generated";
 import { EntriesActionType } from "./store/entries/entries.types";
 import { rootEpic } from "./store/root/root.epics";
 import { rootReducer, RootState } from "./store/root/root.reducer";
 import { RootAction } from "./store/root/root.action";
+import { createApiClient } from "./clientConfig";
 
 export interface Dependencies {
   apiClient: DefaultApi;
@@ -26,7 +26,7 @@ const initializeStore = (store: Store) => {
 
 export const configureStore = () => {
   const dependencies: Dependencies = {
-    apiClient,
+    apiClient: createApiClient(),
   };
   const observableMiddleware = createEpicMiddleware({
     dependencies,
