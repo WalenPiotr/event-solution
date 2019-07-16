@@ -1,3 +1,5 @@
+import { FetchErrorMsg } from "../../errors";
+
 export interface Entry {
   _id: string;
   lastName: string;
@@ -9,8 +11,8 @@ export interface Entry {
 
 export class EntriesState {
   items: Entry[] = [];
-  fetchError: string | null = null;
+  fetchError: FetchErrorMsg | null = null;
   fetching: boolean = false;
-  deleteError: string | null = null;
+  deleteError: FetchErrorMsg | null = null;
   deleting: boolean = false;
 }

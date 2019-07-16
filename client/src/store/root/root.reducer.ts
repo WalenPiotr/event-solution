@@ -4,9 +4,9 @@ import { FormState } from "../form/form.state";
 import { entriesReducer } from "../entries/entries.reducer";
 import { EntriesState } from "../entries/entries.state";
 
-export interface RootState {
-  form: FormState;
-  entries: EntriesState;
+export class RootState {
+  form: FormState = new FormState();
+  entries: EntriesState = new EntriesState();
 }
 
 export const rootReducer = combineReducers<RootState>({

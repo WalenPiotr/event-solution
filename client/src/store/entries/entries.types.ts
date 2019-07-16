@@ -1,41 +1,48 @@
 import { Entry } from "./entries.state";
+import { FetchErrorMsg } from "../../errors";
 
 export enum EntriesActionType {
-  SET_FETCHING = "SET_FETCHING",
-  SET_FETCH_ERROR = "SET_FETCH_ERROR",
-  SET_DELETING = "SET_DELETING",
-  SET_DELETE_ERROR = "SET_DELETE_ERROR",
-  SET_DATA = "SET_DATA",
+  FETCH_DATA = "FETCH_DATA",
+  FETCH_DATA_SUCCESS = "FETCH_DATA_SUCCESS",
+  FETCH_DATA_FAILURE = "FETCH_DATA_FAILURE",
+
+  DELETE_ENTRY = "DELETE_ENTRY",
+  DELETE_ENTRY_SUCCESS = "DELETE_ENTRY_SUCCESS",
+  DELETE_ENTRY_FAILURE = "DELETE_ENTRY_FAILURE",
 }
 
-export interface SetFetchingAction {
-  type: EntriesActionType.SET_FETCHING;
-  payload: boolean;
+export interface FetchDataAction {
+  type: EntriesActionType.FETCH_DATA;
 }
 
-export interface SetDeletingAction {
-  type: EntriesActionType.SET_DELETING;
-  payload: boolean;
+export interface FetchDataSuccessAction {
+  type: EntriesActionType.FETCH_DATA_SUCCESS;
+  entries: Entry[];
 }
 
-export interface SetFetchErrorAction {
-  type: EntriesActionType.SET_FETCH_ERROR;
-  payload: string;
+export interface FetchDataFailureAction {
+  type: EntriesActionType.FETCH_DATA_FAILURE;
+  message: FetchErrorMsg;
 }
 
-export interface SetDeleteErrorAction {
-  type: EntriesActionType.SET_DELETE_ERROR;
-  payload: string;
+export interface DeleteEntryAction {
+  type: EntriesActionType.DELETE_ENTRY;
+  entry: { id: string };
 }
 
-export interface SetDataAction {
-  type: EntriesActionType.SET_DATA;
-  payload: Entry[];
+export interface DeleteEntrySuccessAction {
+  type: EntriesActionType.DELETE_ENTRY_SUCCESS;
+}
+
+export interface DeleteEntryFailureAction {
+  type: EntriesActionType.DELETE_ENTRY_FAILURE;
+  message: FetchErrorMsg;
 }
 
 export type EntriesAction =
-  | SetFetchingAction
-  | SetDataAction
-  | SetFetchErrorAction
-  | SetDeletingAction
-  | SetDeleteErrorAction;
+  | FetchDataAction
+  | FetchDataSuccessAction
+  | FetchDataFailureAction
+  | DeleteEntryAction
+  | DeleteEntrySuccessAction
+  | DeleteEntryFailureAction;

@@ -15,8 +15,9 @@ import { setTouched, setValues } from "../store/form/form.actions";
 import { FormState } from "../store/form/form.state";
 import { submitForm } from "../store/form/form.actions";
 import { RootState } from "../store/root/root.reducer";
-import green from "@material-ui/core/colors/green";
 import ErrorIcon from "@material-ui/icons/ErrorOutline";
+import { apiClient } from "../clientConfig";
+import { FetchErrorMsg } from "../errors";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -40,14 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Form = () => {
   const formState = useSelector<RootState, FormState>(state => state.form);
-  const {
-    values,
-    errors,
-    touched,
-    isSubmitting,
-    submitError,
-    alreadyExistsError,
-  } = formState;
+  const { values, errors, touched, isSubmitting, submitError } = formState;
 
   const dispatch = useDispatch();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,6 +65,7 @@ const Form = () => {
       dispatch(setValues({ date }));
     }
   };
+  const alreadyExistsError = submitError === FetchErrorMsg.ALREADY_EXISTS;
 
   return (
     <Paper className={classes.paper}>

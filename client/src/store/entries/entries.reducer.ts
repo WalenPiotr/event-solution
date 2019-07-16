@@ -6,31 +6,38 @@ export function entriesReducer(
   action: EntriesAction,
 ): EntriesState {
   switch (action.type) {
-    case EntriesActionType.SET_DATA:
+    case EntriesActionType.FETCH_DATA:
       return {
         ...state,
-        items: action.payload,
+        fetching: true,
       };
-    case EntriesActionType.SET_FETCHING:
+    case EntriesActionType.FETCH_DATA_SUCCESS:
       return {
         ...state,
-        fetching: action.payload,
+        fetching: false,
+        items: action.entries,
       };
-    case EntriesActionType.SET_FETCH_ERROR:
+    case EntriesActionType.FETCH_DATA_FAILURE:
       return {
         ...state,
-        fetchError: action.payload,
+        fetching: false,
+        fetchError: action.message,
       };
-    case EntriesActionType.SET_DELETING:
+    case EntriesActionType.DELETE_ENTRY: {
       return {
         ...state,
-        deleting: action.payload,
+        deleting: true,
       };
-    case EntriesActionType.SET_DELETE_ERROR:
+    }
+    case EntriesActionType.DELETE_ENTRY_SUCCESS: {
       return {
         ...state,
-        deleteError: action.payload,
+        deleting: false,
       };
+    }
+    case EntriesActionType.DELETE_ENTRY_FAILURE: {
+      return { ...state, deleteError: action.message, deleting: false };
+    }
     default:
       return state;
   }

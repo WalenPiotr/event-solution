@@ -6,7 +6,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/styles";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteEntry } from "../store/entries/entries.actions";
+import { entryDelete } from "../store/entries/entries.actions";
 import { Entry, EntriesState } from "../store/entries/entries.state";
 import { RootState } from "../store/root/root.reducer";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -43,7 +43,7 @@ const EntryView = () => {
   const dispatch = useDispatch();
   const handleClick = (id: string) => (event: React.MouseEvent) => {
     event.preventDefault();
-    dispatch(deleteEntry(id));
+    dispatch(entryDelete(id));
   };
   if (fetchError) {
     return (

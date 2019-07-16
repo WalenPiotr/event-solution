@@ -1,5 +1,6 @@
 import { MinLength, IsEmail, validateSync, IsDate } from "class-validator";
 import { plainToClass } from "class-transformer";
+import { FetchErrorMsg } from "../../errors";
 
 export class FormValues {
   @MinLength(1, { message: "please enter your first name" })
@@ -16,6 +17,13 @@ export class FormValues {
   date: Date = new Date();
 }
 
+export class FormErrors {
+  firstName: string | null = null;
+  lastName: string | null = null;
+  email: string | null = null;
+  date: string | null = null;
+}
+
 export const validateFormValues = (
   values: FormValues,
   prevErrors: FormErrors = new FormErrors(),
@@ -30,13 +38,6 @@ export const validateFormValues = (
   );
 };
 
-export class FormErrors {
-  firstName: string | null = null;
-  lastName: string | null = null;
-  email: string | null = null;
-  date: string | null = null;
-}
-
 export class FormTouched {
   firstName: boolean = false;
   lastName: boolean = false;
@@ -44,11 +45,16 @@ export class FormTouched {
   date: boolean = true;
 }
 
+export const setAllTouchedToTrue = (): FormTouched =>
+  Object.keys(new FormTouched()).reduce(
+    (p, c) => ({ ...p, [c]: true }),
+    new FormTouched(),
+  );
+
 export class FormState {
   values: FormValues = new FormValues();
   errors: FormErrors = validateFormValues(new FormValues());
   touched: FormTouched = new FormTouched();
   isSubmitting: boolean = false;
-  submitError: string | null = null;
-  alreadyExistsError: string | null = null;
+  submitError: FetchErrorMsg | null = null;
 }

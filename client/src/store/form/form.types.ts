@@ -1,74 +1,43 @@
 import { MinLength, validate, validateSync, IsEmail } from "class-validator";
 import { plainToClass } from "class-transformer";
 import { FormValues, FormErrors, FormTouched } from "./form.state";
+import { FetchErrorMsg } from "../../errors";
 
 export enum FormActionType {
+  SUBMIT_FORM = "SUBMIT_FORM",
+  SUBMIT_FORM_SUCCESS = "SUBMIT_FORM_SUCCESS",
+  SUBMIT_FORM_FAILURE = "SUBMIT_FORM_FAILURE",
+
   SET_VALUES = "SET_VALUES",
-  CLEAR_ALL_VALUES = "CLEAR_ALL_VALUES",
-  SET_ERRORS = "SET_ERRORS",
   SET_TOUCHED = "SET_TOUCHED",
-  SET_ALL_TOUCHED = "SET_ALL_TOUCHED",
-  CLEAR_ALL_TOUCHED = "CLEAR_ALL_TOUCHED",
-  SET_SUBMITTING = "SET_SUBMITTING",
-  SET_SUBMIT_ERROR = "SET_SUBMIT_ERROR",
-  SET_ALREADY_EXISTS_ERROR = "SET_ALREADY_EXISTS_ERROR",
-  CLEAR_API_ERRORS = "CLEAR_API_ERRORS",
 }
 
-export interface SetValueAction {
+export interface SetValuesAction {
   type: FormActionType.SET_VALUES;
-  payload: Partial<FormValues>;
-}
-
-export interface ClearAllValues {
-  type: FormActionType.CLEAR_ALL_VALUES;
-}
-
-export interface SetErrorsAction {
-  type: FormActionType.SET_ERRORS;
-  payload: Partial<FormErrors>;
+  values: Partial<FormValues>;
 }
 
 export interface SetTouchedAction {
   type: FormActionType.SET_TOUCHED;
-  payload: Partial<FormTouched>;
+  touched: Partial<FormTouched>;
 }
 
-export interface SetAllTouched {
-  type: FormActionType.SET_ALL_TOUCHED;
+export interface SubmitFormAction {
+  type: FormActionType.SUBMIT_FORM;
 }
 
-export interface ClearAllTouched {
-  type: FormActionType.CLEAR_ALL_TOUCHED;
+export interface SubmitFormFailureAction {
+  type: FormActionType.SUBMIT_FORM_FAILURE;
+  message: FetchErrorMsg;
 }
 
-export interface SetSubmittingAction {
-  type: FormActionType.SET_SUBMITTING;
-  payload: boolean;
-}
-
-export interface SetSubmitErrorAction {
-  type: FormActionType.SET_SUBMIT_ERROR;
-  payload: string | null;
-}
-
-export interface SetAlreadyExistsErrorAction {
-  type: FormActionType.SET_ALREADY_EXISTS_ERROR;
-  payload: string | null;
-}
-
-export interface ClearAPIErrorsAction {
-  type: FormActionType.CLEAR_API_ERRORS;
+export interface SubmitFormSuccessAction {
+  type: FormActionType.SUBMIT_FORM_SUCCESS;
 }
 
 export type FormAction =
-  | ClearAllTouched
-  | ClearAllValues
-  | SetAllTouched
-  | SetValueAction
-  | SetErrorsAction
-  | SetTouchedAction
-  | SetSubmittingAction
-  | SetSubmitErrorAction
-  | SetAlreadyExistsErrorAction
-  | ClearAPIErrorsAction;
+  | SubmitFormAction
+  | SubmitFormFailureAction
+  | SubmitFormSuccessAction
+  | SetValuesAction
+  | SetTouchedAction;
