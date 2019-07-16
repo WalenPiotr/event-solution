@@ -1,7 +1,7 @@
 import { combineEpics, ofType } from "redux-observable";
 import { from, of } from "rxjs";
 import { catchError, switchMap, withLatestFrom } from "rxjs/operators";
-import { mapErrorToMessage } from "../../errors";
+import { mapErrorToMessage, FetchErrorMsg } from "../../errors";
 import { EpicWithDependecies } from "../../reduxConfig";
 import { EntriesActionType, FetchDataAction } from "../entries/entries.types";
 import { RootState } from "../root/root.reducer";
@@ -37,15 +37,15 @@ export const submitFormEpic: EpicWithDependecies = (
       };
       return from(apiClient.entryPost(state.form.values)).pipe(
         switchMap(() => of(resultAction, refetchAction)),
+        catchError(async err => {
+          const message = mapErrorToMessage(err);
+          const resultAction: SubmitFormFailureAction = {
+            type: FormActionType.SUBMIT_FORM_FAILURE,
+            message,
+          };
+          return resultAction;
+        }),
       );
-    }),
-    catchError(async err => {
-      const message = mapErrorToMessage(err);
-      const resultAction: SubmitFormFailureAction = {
-        type: FormActionType.SUBMIT_FORM_FAILURE,
-        message,
-      };
-      return resultAction;
     }),
   );
 
