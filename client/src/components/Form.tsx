@@ -4,20 +4,18 @@ import Paper from "@material-ui/core/Paper";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import ErrorIcon from "@material-ui/icons/ErrorOutline";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
-import { makeStyles, withStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/styles";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setTouched, setValues } from "../store/form/form.actions";
-import { FormState } from "../store/form/form.state";
-import { submitForm } from "../store/form/form.actions";
-import { RootState } from "../store/root/root.reducer";
-import ErrorIcon from "@material-ui/icons/ErrorOutline";
-import { apiClient } from "../clientConfig";
 import { FetchErrorMsg } from "../errors";
+import { setTouched, setValues, submitForm } from "../store/form/form.actions";
+import { FormState } from "../store/form/form.state";
+import { RootState } from "../store/root/root.reducer";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
@@ -111,7 +109,7 @@ const Form = () => {
           Boolean(errors.email && touched.email)
             ? errors.email
             : Boolean(alreadyExistsError && touched.email)
-            ? alreadyExistsError
+            ? "entry with given email already exists"
             : ""
         }
         className={classes.input}
@@ -133,13 +131,10 @@ const Form = () => {
         </MuiPickersUtilsProvider>
       </div>
 
-      {submitError ? (
+      {submitError && !alreadyExistsError ? (
         <div className={classes.errorBox}>
           <ErrorIcon color="error" className={classes.errorIcon} />
           <Typography color="error" variant="subtitle1">
-            {submitError === FetchErrorMsg.ALREADY_EXISTS
-              ? "Entry with given name already exists"
-              : null}
             {submitError === FetchErrorMsg.INTERNAL_ERROR
               ? "Unexpected Error"
               : null}
