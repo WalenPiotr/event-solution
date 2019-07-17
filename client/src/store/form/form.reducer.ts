@@ -17,7 +17,11 @@ export function formReducer(
         errors: validateFormValues({ ...state.values, ...action.values }),
         submitError: null,
       };
-
+    case FormActionType.SET_TOUCHED:
+      return {
+        ...state,
+        touched: { ...state.touched, ...action.touched },
+      };
     case FormActionType.SUBMIT_FORM:
       return {
         ...state,
