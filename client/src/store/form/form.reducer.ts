@@ -15,6 +15,7 @@ export function formReducer(
         ...state,
         values: { ...state.values, ...action.values },
         errors: validateFormValues({ ...state.values, ...action.values }),
+        submitError: null,
       };
 
     case FormActionType.SUBMIT_FORM:

@@ -9,6 +9,7 @@ import { RootState } from "../root/root.reducer";
 import { fetchDataEpic, deleteEntryEpic } from "./entries.epics";
 import { stub } from "sinon";
 import { FetchErrorMsg } from "../../errors";
+import { toArray } from "rxjs/operators";
 
 describe("form epic tests", () => {
   describe("fetchDataEpic", () => {
@@ -74,7 +75,7 @@ describe("form epic tests", () => {
     });
   });
   describe("deleteEntryEpic", () => {
-    it("should return DeleteEntryFailureAction when apiClient rejects", async () => {
+    it("should return DeleteEntryFailureAction when apiClient rejects", async done => {
       const action$ = new ActionsObservable<DeleteEntryAction>(
         of({
           type: EntriesActionType.DELETE_ENTRY,
@@ -94,12 +95,16 @@ describe("form epic tests", () => {
         },
       };
       const output$ = deleteEntryEpic(action$, state$, dependencies as any);
-      expect(await output$.toPromise()).toEqual({
-        type: EntriesActionType.DELETE_ENTRY_FAILURE,
-        message: FetchErrorMsg.CONNECTION_ERROR,
+
+      output$.pipe(toArray()).subscribe(actionArray => {
+        expect(actionArray).toContainEqual({
+          type: EntriesActionType.DELETE_ENTRY_FAILURE,
+          message: FetchErrorMsg.CONNECTION_ERROR,
+        });
+        done();
       });
     });
-    it("should return DeleteEntrySuccessAction when apiClient resolves", async () => {
+    it("should return DeleteEntrySuccessAction when apiClient resolves", async done => {
       const action$ = new ActionsObservable<DeleteEntryAction>(
         of({
           type: EntriesActionType.DELETE_ENTRY,
@@ -123,8 +128,15 @@ describe("form epic tests", () => {
         },
       };
       const output$ = deleteEntryEpic(action$, state$, dependencies as any);
-      expect(await output$.toPromise()).toEqual({
-        type: EntriesActionType.DELETE_ENTRY_SUCCESS,
+
+      output$.pipe(toArray()).subscribe(actionArray => {
+        expect(actionArray).toContainEqual({
+          type: EntriesActionType.DELETE_ENTRY_SUCCESS,
+        });
+        expect(actionArray).toContainEqual({
+          type: EntriesActionType.FETCH_DATA,
+        });
+        done();
       });
     });
   });

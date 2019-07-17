@@ -1,5 +1,5 @@
 import { combineEpics, Epic, ofType } from "redux-observable";
-import { catchError, mergeMap } from "rxjs/operators";
+import { catchError, mergeMap, switchMap } from "rxjs/operators";
 import { mapErrorToMessage } from "../../errors";
 import { EpicWithDependecies } from "../../reduxConfig";
 import {
@@ -11,6 +11,7 @@ import {
   FetchDataFailureAction,
   FetchDataSuccessAction,
 } from "./entries.types";
+import { from, of } from "rxjs";
 
 export const fetchDataEpic: EpicWithDependecies = (
   action$,
@@ -41,22 +42,25 @@ export const fetchDataEpic: EpicWithDependecies = (
 export const deleteEntryEpic: Epic = (action$, state$, { apiClient }) =>
   action$.pipe(
     ofType(EntriesActionType.DELETE_ENTRY),
-    mergeMap(async (action: DeleteEntryAction) => {
+    switchMap((action: DeleteEntryAction) => {
       const { id } = action.entry;
-      const response = await apiClient.entryIdDelete(id);
-      // const payload = await response.json();
       const resultAction: DeleteEntrySuccessAction = {
         type: EntriesActionType.DELETE_ENTRY_SUCCESS,
       };
-      return resultAction;
-    }),
-    catchError(async err => {
-      const message = mapErrorToMessage(err);
-      const resultAction: DeleteEntryFailureAction = {
-        type: EntriesActionType.DELETE_ENTRY_FAILURE,
-        message,
+      const fetchAction: FetchDataAction = {
+        type: EntriesActionType.FETCH_DATA,
       };
-      return resultAction;
+      return from(apiClient.entryIdDelete(id)).pipe(
+        switchMap(() => of(resultAction, fetchAction)),
+        catchError(async err => {
+          const message = mapErrorToMessage(err);
+          const resultAction: DeleteEntryFailureAction = {
+            type: EntriesActionType.DELETE_ENTRY_FAILURE,
+            message,
+          };
+          return resultAction;
+        }),
+      );
     }),
   );
 

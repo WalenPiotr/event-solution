@@ -68,7 +68,7 @@ describe("form epic tests", () => {
         message: "CONNECTION_ERROR",
       });
     });
-    it("should return SubmitFormSuccessAction if apiClient resolves", async () => {
+    it("should return SubmitFormSuccessAction if apiClient resolves", async done => {
       const action$ = new ActionsObservable(
         of({
           type: FormActionType.SUBMIT_FORM,
@@ -102,10 +102,13 @@ describe("form epic tests", () => {
       const output$ = submitFormEpic(action$, state$, dependencies as any);
 
       output$.pipe(toArray()).subscribe(actionArray => {
-        expect(actionArray).toEqual([
-          { type: FormActionType.SUBMIT_FORM_SUCCESS },
-          { type: EntriesActionType.FETCH_DATA },
-        ]);
+        expect(actionArray).toContainEqual({
+          type: FormActionType.SUBMIT_FORM_SUCCESS,
+        });
+        expect(actionArray).toContainEqual({
+          type: EntriesActionType.FETCH_DATA,
+        });
+        done();
       });
     });
   });
