@@ -2,18 +2,6 @@ import { setTouched, setValues, submitForm } from "./form.actions";
 import { FormTouched, FormValues } from "./form.state";
 import { FormActionType } from "./form.types";
 
-// const mockClient = {};
-
-// const dependencies: Dependencies = {
-//   apiClient: mockClient,
-// };
-// const observableMiddleware = createEpicMiddleware({
-//   dependencies,
-// });
-// const middlewares = [observableMiddleware];
-// const mockStore = configureMockStore(middlewares);
-// observableMiddleware.run(rootEpic);
-
 describe("form actions", () => {
   describe("setValues", () => {
     it("should set form values", () => {
