@@ -4,8 +4,8 @@ import { ConfigService } from '../config/config.service';
 import { MongooseModule } from '@nestjs/mongoose';
 
 function DatabaseWithConfigModule(): DynamicModule {
-  const connectionString = `mongodb://localhost:27017/dbname`;
-  return MongooseModule.forRoot(connectionString, {
+  const { DB_CONNECTION_STRING } = process.env;
+  return MongooseModule.forRoot(DB_CONNECTION_STRING, {
     useNewUrlParser: true,
   });
 }

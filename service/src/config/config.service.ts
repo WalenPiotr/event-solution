@@ -3,7 +3,10 @@ import * as fs from 'fs';
 import { IsNotEmpty, validateSync, IsInt } from 'class-validator';
 import { plainToClass, Transform } from 'class-transformer';
 
-export class EnvConfig {}
+export class EnvConfig {
+  @IsNotEmpty()
+  DB_CONNECTION_STRING: string;
+}
 
 export class ConfigService {
   private readonly envConfig: EnvConfig;
