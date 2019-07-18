@@ -2,8 +2,6 @@
 
 This project is solution for recruitment task for Brainhub.
 
-### Goal:
-
 ## Live Demo
 
 To view live demo of this app please visit:
