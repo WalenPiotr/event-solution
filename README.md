@@ -9,7 +9,7 @@ This project is solution for recruitment task for Brainhub.
 To view live demo of this app please visit:
 http://46.101.246.218:3999/
 
-To view interactive docs (swagger ui) of this app visit:
+To view interactive docs (swagger ui) of API visit:
 http://46.101.246.218:4000/api
 
 ## Getting Started
