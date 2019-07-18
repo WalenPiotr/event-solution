@@ -1,7 +1,7 @@
 import { combineEpics, ofType } from "redux-observable";
 import { from, of } from "rxjs";
 import { catchError, switchMap, withLatestFrom } from "rxjs/operators";
-import { mapErrorToMessage, FetchErrorMsg } from "../../errors";
+import { mapErrorToMessage } from "../../errors";
 import { EpicWithDependecies } from "../../reduxConfig";
 import { EntriesActionType, FetchDataAction } from "../entries/entries.types";
 import { RootState } from "../root/root.reducer";

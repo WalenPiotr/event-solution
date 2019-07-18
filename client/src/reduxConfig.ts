@@ -1,13 +1,12 @@
-import { applyMiddleware, createStore, Store, Action } from "redux";
+import { Action, applyMiddleware, createStore, Store } from "redux";
 import logger from "redux-logger";
 import { createEpicMiddleware, Epic } from "redux-observable";
 import thunkMiddleware from "redux-thunk";
+import { createApiClient } from "./clientConfig";
 import { DefaultApi } from "./generated";
 import { EntriesActionType } from "./store/entries/entries.types";
 import { rootEpic } from "./store/root/root.epics";
 import { rootReducer, RootState } from "./store/root/root.reducer";
-import { RootAction } from "./store/root/root.action";
-import { createApiClient } from "./clientConfig";
 
 export interface Dependencies {
   apiClient: DefaultApi;

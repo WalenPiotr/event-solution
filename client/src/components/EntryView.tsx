@@ -1,17 +1,17 @@
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Fab from "@material-ui/core/Fab";
 import Paper from "@material-ui/core/Paper";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ErrorIcon from "@material-ui/icons/ErrorOutline";
 import { makeStyles } from "@material-ui/styles";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { entryDelete } from "../store/entries/entries.actions";
-import { Entry, EntriesState } from "../store/entries/entries.state";
-import { RootState } from "../store/root/root.reducer";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import ErrorIcon from "@material-ui/icons/ErrorOutline";
 import { FetchErrorMsg } from "../errors";
+import { entryDelete } from "../store/entries/entries.actions";
+import { EntriesState } from "../store/entries/entries.state";
+import { RootState } from "../store/root/root.reducer";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {

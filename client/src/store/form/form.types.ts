@@ -1,7 +1,5 @@
-import { MinLength, validate, validateSync, IsEmail } from "class-validator";
-import { plainToClass } from "class-transformer";
-import { FormValues, FormErrors, FormTouched } from "./form.state";
 import { FetchErrorMsg } from "../../errors";
+import { FormTouched, FormValues } from "./form.state";
 
 export enum FormActionType {
   SUBMIT_FORM = "SUBMIT_FORM",
