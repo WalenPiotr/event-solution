@@ -16,7 +16,6 @@ export default function App() {
         <CssBaseline />
         <Form />
         <EntryView />
-        {JSON.stringify(process.env, null, 2)}
       </ThemeProvider>
     </Provider>
   );
