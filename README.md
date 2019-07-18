@@ -77,6 +77,10 @@ Both client and server are written using Typescript. Down below there is a list 
 - nestjs
 - mongoDB
 
+## Deployment
+
+You can also launch this app using docker-compose. See compose.\*\*\*.yml files placed in root directory.
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
