@@ -20,6 +20,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 To run this app you need node and npm installed
 
+To run this app locally you need to start a MongoDB instance and provide appropriate connection string as enviroment variable for service. You can set env variables using `service/development.env` file
+You can use provided docker-compose file to start database (`compose.depend.yml`)
+
 ### Installing
 
 1. Clone this project
